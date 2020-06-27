@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 
-class Body extends Component{
+class Part extends Component{
     render(){
         var style = {
             backgroundImage: 'url(' + require('./img/' + this.props.part + '.png') + ')',
@@ -18,4 +18,4 @@ class Body extends Component{
     }
 }
 
-export default Body;
+export default Part;
