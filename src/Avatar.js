@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import Part from "./Part.js";
+import Background from "./Background.js";
 import MaskedInput from 'react-text-mask';
-import { Col, Row, Button, Form, FormGroup, Label, Input, FormText, InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
+import { Col, Row, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
 import Switch from "react-switch";
 
 class Avatar extends Component{
@@ -110,7 +111,8 @@ class Avatar extends Component{
     render(){
         return(
             <div>
-                <div className="avatar mx-auto my-4">  
+                <div className="avatar mx-auto my-4">
+                    <Background/>
                     {this.state.selectedHeadgear === 'helmet' ? (<Part color={this.state.shirtColor} part="helmet" index="15"></Part>) : false}
                     {this.state.selectedHeadgear === 'cap' ? <Part color={this.state.shirtColor} part="cap" index="15"></Part> : false}
                     {this.state.selectedHairstyle === 'dreadlocks' && this.state.selectedHeadgear === 'none' ? <Part color={this.state.hairColor} part="hair_dreadlocks" index="14"></Part> : false}

@@ -2,9 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Creator from "./Creator";
-import { Container } from "reactstrap";
-import { Row } from "reactstrap";
-
+import { Container, Row } from "reactstrap";
 
 var destination = document.getElementById("container");
 
