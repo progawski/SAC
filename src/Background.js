@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { Row, Col, Button } from "reactstrap";
+import { Row, Col, Button, FormGroup, Label, Input } from "reactstrap";
 
 
 
@@ -47,12 +47,13 @@ class Background extends Component{
             mapList: [ash, b2b, blade, campeche, cobra, death, division, dropdown,
                       equinox, guardian, hormone, icebeam, kampf, lanubya, laos, maya,
                       mfm, nuubia, raspberry, rotten, ruins, run, scorpion, snakebite,
-                      spark, steel, triumph, viet, voland, wretch, x]
+                      spark, steel, triumph, viet, voland, wretch, x],
+            selectedBgMap: 'ash'
         };
 
         this.onClickPrevious = this.onClickPrevious.bind(this);
         this.onClickNext = this.onClickNext.bind(this);
-
+        // this.bgMap = this.bgMap.bind(this);
     }
 
     onClickNext(){
@@ -65,6 +66,9 @@ class Background extends Component{
                 index: this.state.index + 1
             })
         }
+        this.setState({
+            selectedBgMap: this.state.mapList[0].toString()
+        })   
     }
 
     onClickPrevious(){
@@ -77,24 +81,49 @@ class Background extends Component{
                 index: this.state.index - 1
             })
         }
+        this.setState({
+            selectedBgMap: this.state.mapList[0].toString()
+        })   
     }
+
+
+    // bgMap(){
+    //     this.setState({
+    //         selectedBgMap: '#' + e.target.value
+    //     });  
+    // }
 
     render(){
         var style = {
-            /*ackgroundImage: 'url(' + this.state.mapList[this.state.index] + ')', */
-            position: 'relative',
             display: 'block',
-            width: 200,
-            height: 200,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
             borderRadius: 50 + '%'
         }
         return(     
             <div>
                 <img src={this.state.mapList[this.state.index]} style={style}></img>
-                <Col className="text-center my-3">
-                    <Button onClick={this.onClickPrevious}><FontAwesomeIcon icon={faAngleLeft}/></Button>
-                    <Button className="ml-2" onClick={this.onClickNext}><FontAwesomeIcon icon={faAngleRight}/></Button>
-                </Col>
+                {/* <Row>
+                    <Col xs={3}>
+                        <Button onClick={this.onClickPrevious}><FontAwesomeIcon icon={faAngleLeft}/></Button>
+                    </Col>
+                    <Col xs={6}>  
+                        <FormGroup>
+                            <Label for="bgMap">Map</Label>
+                            <Input type="select" value={this.state.selectedBgMap} id="bgMap" onChange={this.bgMap}>
+                                <option value="ash">Ash</option>
+                                <option value="b2b">B2b</option>
+                                <option value="blade">Blade</option>
+                            </Input>
+                        </FormGroup>   
+                    </Col>
+                    <Col xs={3}>
+                        <Button onClick={this.onClickNext}><FontAwesomeIcon icon={faAngleRight}/></Button>
+                    </Col>
+                </Row>  */}
             </div>
         );
     }
