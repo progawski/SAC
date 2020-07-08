@@ -13,7 +13,7 @@ class Avatar extends Component{
         }
         return(     
             <div style={style}>
-                <Background/>
+                <Background bgMap={this.props.bgMap}/>
                 <Gostek 
                 skinColor={this.props.skinColor} 
                 hairColor={this.props.hairColor}

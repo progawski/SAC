@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import Avatar from "./Avatar.js";
-import Gostek from "./Gostek.js";
-import Background from "./Background.js";
+import BackgroundChanger from "./BackgroundChanger.js";
 import MaskedInput from 'react-text-mask';
 import { Card, Col, Row, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
 import Switch from "react-switch";
@@ -21,7 +20,13 @@ class Creator extends Component{
             selectedHeadgear: 'helmet',
             selectedHairstyle: 'army',
             selectedWeapon: 'deserteagles',
-            granadeChecked: true
+            granadeChecked: true,
+            bgMap: 'Ash',
+            index: 0,
+            mapList: ['Ash', 'B2b', 'Blade', 'Campeche', 'Cobra', 'Death', 'Division', 'Dropdown',
+                      'Equinox', 'Guardian', 'Hormone', 'Icebeam', 'Kampf', 'Lanubya', 'Laos', 'Maya',
+                      'Mfm', 'Nuubia', 'Raspberry', 'Rotten', 'Ruins', 'Run', 'Scorpion', 'Snakebite',
+                      'Spark', 'Steel', 'Triumph', 'Viet', 'Voland', 'Wretch', 'X']
         };
 
         this.colorValue = this.colorValue.bind(this);
@@ -30,6 +35,8 @@ class Creator extends Component{
         this.hairstyle = this.hairstyle.bind(this);
         this.granade = this.granade.bind(this);
         this.weapon = this.weapon.bind(this);
+        this.onClickPrevious = this.onClickPrevious.bind(this);
+        this.onClickNext = this.onClickNext.bind(this);
 
     }
 
@@ -109,12 +116,42 @@ class Creator extends Component{
         });
     }
 
+    onClickNext(){
+        if(this.state.index + 1 === this.state.mapList.length){
+            this.setState({
+                index: 0
+            })
+        } else {
+            this.setState({
+                index: this.state.index + 1
+            })
+        }
+        this.setState({
+            bgMap: this.state.mapList[this.state.index+1]
+        })
+    }
+
+    onClickPrevious(){
+        if(this.state.index - 1 === -1){
+            this.setState({
+                index: this.state.mapList.length - 1
+            })
+        } else {
+            this.setState({
+                index: this.state.index - 1
+            })
+        }
+        this.setState({
+            bgMap: this.state.mapList[this.state.index-1]
+        })
+    }
+
     render(){
         return(
             <Card className="m-auto p-3 shadow">
                 
                     <Avatar {...this.state}/>
-               
+                    <BackgroundChanger onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious}/>
                 <Form>
                     <Row form>
                         <Col md={6}>
