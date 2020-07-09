@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "react-color-picker/index.css"
 import Creator from "./Creator";
 import { Container, Row } from "reactstrap";
 

@@ -4,6 +4,7 @@ import BackgroundChanger from "./BackgroundChanger.js";
 import MaskedInput from 'react-text-mask';
 import { Card, Col, Row, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
 import Switch from "react-switch";
+import { SketchPicker, PhotoshopPicker } from "react-color";
 
 class Creator extends Component{
 
@@ -37,6 +38,7 @@ class Creator extends Component{
         this.weapon = this.weapon.bind(this);
         this.onClickPrevious = this.onClickPrevious.bind(this);
         this.onClickNext = this.onClickNext.bind(this);
+        this.onChangeMap = this.onChangeMap.bind(this);
 
     }
 
@@ -119,39 +121,60 @@ class Creator extends Component{
     onClickNext(){
         if(this.state.index + 1 === this.state.mapList.length){
             this.setState({
-                index: 0
+                index: 0,
+                bgMap: this.state.mapList[0]
             })
         } else {
             this.setState({
-                index: this.state.index + 1
+                index: this.state.index + 1,
+                bgMap: this.state.mapList[this.state.index+1]
             })
         }
-        this.setState({
-            bgMap: this.state.mapList[this.state.index+1]
-        })
     }
 
     onClickPrevious(){
         if(this.state.index - 1 === -1){
             this.setState({
-                index: this.state.mapList.length - 1
+                index: this.state.mapList.length - 1,
+                bgMap: this.state.mapList[this.state.mapList.length - 1]
             })
         } else {
             this.setState({
-                index: this.state.index - 1
+                index: this.state.index - 1,
+                bgMap: this.state.mapList[this.state.index-1]
             })
         }
+    }
+
+    onChangeMap(e){
         this.setState({
-            bgMap: this.state.mapList[this.state.index-1]
+            index: this.state.mapList.indexOf(e.target.value),
+            bgMap: e.target.value
         })
     }
+
+    handleChangeComplete = (color) => {
+        this.setState({
+            color: color.hex 
+        });
+        if(this.state.selectedPart === 'skin'){
+            this.setState({
+                skinColor: color.hex
+            });  
+        }
+      };
+
 
     render(){
         return(
             <Card className="m-auto p-3 shadow">
                 
                     <Avatar {...this.state}/>
-                    <BackgroundChanger onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious}/>
+                    <BackgroundChanger onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} bgMap={this.state.bgMap} onChangeMap={this.onChangeMap}/>
+                    <SketchPicker 
+                    color={ this.state.color}
+                    onChangeComplete={ this.handleChangeComplete }
+                    />
                 <Form>
                     <Row form>
                         <Col md={6}>
