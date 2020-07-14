@@ -2,9 +2,11 @@ import React, {Component} from "react";
 import Avatar from "./Avatar.js";
 import BackgroundChanger from "./BackgroundChanger.js";
 import MaskedInput from 'react-text-mask';
-import { Card, Col, Row, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
+import { Card, Col, Row, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, InputGroup, Button, UncontrolledPopover, PopoverHeader, PopoverBody } from "reactstrap";
 import Switch from "react-switch";
-import { SketchPicker, PhotoshopPicker } from "react-color";
+import { SketchPicker } from "react-color";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPalette } from "@fortawesome/free-solid-svg-icons";
 
 class Creator extends Component{
 
@@ -39,6 +41,7 @@ class Creator extends Component{
         this.onClickPrevious = this.onClickPrevious.bind(this);
         this.onClickNext = this.onClickNext.bind(this);
         this.onChangeMap = this.onChangeMap.bind(this);
+        this.handleChangeComplete = this.handleChangeComplete.bind(this);
 
     }
 
@@ -153,33 +156,75 @@ class Creator extends Component{
         })
     }
 
-    handleChangeComplete = (color) => {
+    handleChangeComplete(color, e){
         this.setState({
-            color: color.hex 
+            color: color.hex.toUpperCase()
         });
         if(this.state.selectedPart === 'skin'){
             this.setState({
-                skinColor: color.hex
+                skinColor: color.hex.toUpperCase()
             });  
         }
-      };
-
-
+        if(this.state.selectedPart === 'hair'){
+            this.setState({
+                hairColor: color.hex.toUpperCase()
+            });    
+        }
+        if(this.state.selectedPart === 'shirt'){
+            this.setState({
+                shirtColor: color.hex.toUpperCase()
+            }); 
+        }
+        if(this.state.selectedPart === 'pants'){
+            this.setState({
+                pantsColor: color.hex.toUpperCase()
+            }); 
+        }
+        this.setState({
+            e: {
+                passive: false
+            }
+        });
+    };
+    
     render(){
         return(
-            <Card className="m-auto p-3 shadow">
-                
+            <Card className="m-auto p-3 shadow">      
                     <Avatar {...this.state}/>
-                    <BackgroundChanger onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} bgMap={this.state.bgMap} onChangeMap={this.onChangeMap}/>
-                    <SketchPicker 
-                    color={ this.state.color}
-                    onChangeComplete={ this.handleChangeComplete }
-                    />
+                    <BackgroundChanger onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} bgMap={this.state.bgMap} onChangeMap={this.onChangeMap}/>                  
+                    <UncontrolledPopover trigger="legacy" placement="right" target="PopoverLegacy">      
+                        <SketchPicker
+                        color={this.state.color}
+                        onChangeComplete={this.handleChangeComplete}
+                        disableAlpha={true}
+                        presetColors={[
+                            {color: '#000000', title: 'Black' },
+                            {color: '#800000', title: 'Maroon' },
+                            {color: '#008000', title: 'Green' },
+                            {color: '#808000', title: 'Olive' },
+                            {color: '#000080', title: 'Navy' },
+                            {color: '#800080', title: 'Purple' },
+                            {color: '#008080', title: 'Teal' },
+                            {color: '#808080', title: 'Gray' },
+                            {color: '#C0C0C0', title: 'Silver' },
+                            {color: '#FF0000', title: 'Red' },
+                            {color: '#00FF00', title: 'Lime' },
+                            {color: '#FFFF00', title: 'Yellow' },
+                            {color: '#0000FF', title: 'Blue' },
+                            {color: '#FF00FF', title: 'Fuchsia' },
+                            {color: '#00FFFF', title: 'Aqua' },
+                            {color: '#FFFFFF', title: 'White' },
+                            {color: '#DAAA70', title: 'White skin' },
+                            {color: '#826442', title: 'Dark skin' },
+                            {color: '#634317', title: 'Black skin' }
+                        ]}
+                        />
+                    </UncontrolledPopover>
                 <Form>
                     <Row form>
-                        <Col md={6}>
+                        <Col xs={6}>
                         <FormGroup>
-                            <Label for="bodyPart">Part:</Label>
+                            <Label className="text-secondary" for="bodyPart">Part:</Label>
                             <Input type="select" value={this.state.selectedPart} id="bodyPart" onChange={this.bodyPart}>
                                 <option value="skin">Skin</option>
                                 <option value="hair">Hair</option>
@@ -188,12 +233,14 @@ class Creator extends Component{
                             </Input>
                         </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col xs={6}>
                         <FormGroup>
-                            <Label for="color">Color:</Label>
+                            <Label className="text-secondary" for="color">Color (HEX):</Label>
                             <InputGroup>
                             <InputGroupAddon addonType="prepend">
-                                <InputGroupText>#</InputGroupText>
+                                
+                                    <Button  type="button" id="PopoverLegacy" color="primary"><FontAwesomeIcon icon={faPalette}  size={'lg'}/></Button>
+                                
                             </InputGroupAddon>
                             <MaskedInput
                             className="form-control"
@@ -209,9 +256,9 @@ class Creator extends Component{
                         </Col>
                     </Row>
                     <Row form>
-                        <Col md={6}>
+                        <Col xs={6}>
                         <FormGroup>
-                            <Label for="hairstyle">Hairstyle:</Label>
+                            <Label className="text-secondary" for="hairstyle">Hairstyle:</Label>
                             <Input type="select" value={this.state.selectedHairstyle} id="hairstyle" onChange={this.hairstyle}>
                                 <option value="army">Army</option>
                                 <option value="dreadlocks">Dreadlocks</option>
@@ -221,9 +268,9 @@ class Creator extends Component{
                             </Input>
                         </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col xs={6}>
                         <FormGroup>
-                            <Label for="headgear">Headgear:</Label>
+                            <Label className="text-secondary" for="headgear">Headgear:</Label>
                             <Input type="select" value={this.state.selectedHeadgear} id="headgear" onChange={this.headgear}>
                                 <option value="none">None</option>
                                 <option value="cap">Cap</option>
@@ -233,9 +280,9 @@ class Creator extends Component{
                         </Col>
                     </Row>
                     <Row form>
-                        <Col md={6}>
+                        <Col xs={6}>
                             <FormGroup>
-                                <Label for="weapon">Weapon:</Label>
+                                <Label className="text-secondary" for="weapon">Weapon:</Label>
                                 <Input type="select" value={this.state.selectedWeapon} id="weapon" onChange={this.weapon}>
                                     <option value="deserteagles">Desert Eagles</option>
                                     <option value="hkmp5">HK MP5</option>
@@ -250,9 +297,9 @@ class Creator extends Component{
                                 </Input>
                             </FormGroup>
                             </Col>
-                        <Col md={6}>
+                        <Col xs={6}>
                             <FormGroup>
-                                <div className="mb-3">Granade: </div>
+                                <div className="mb-3 text-secondary">Granade: </div>
                                 <Switch
                                 checked={this.state.granadeChecked}
                                 onChange={this.granade}
