@@ -192,7 +192,7 @@ class Creator extends Component{
             <Card className="m-auto p-3 shadow">      
                     <Avatar {...this.state}/>
                     <BackgroundChanger onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} bgMap={this.state.bgMap} onChangeMap={this.onChangeMap}/>                  
-                    <UncontrolledPopover trigger="legacy" placement="right" target="PopoverLegacy">      
+                    <UncontrolledPopover className="touch-action" trigger="legacy" placement="right" target="PopoverLegacy">      
                         <SketchPicker
                         color={this.state.color}
                         onChangeComplete={this.handleChangeComplete}
@@ -238,9 +238,7 @@ class Creator extends Component{
                             <Label className="text-secondary" for="color">Color (HEX):</Label>
                             <InputGroup>
                             <InputGroupAddon addonType="prepend">
-                                
-                                    <Button  type="button" id="PopoverLegacy" color="primary"><FontAwesomeIcon icon={faPalette}  size={'lg'}/></Button>
-                                
+                                <Button  type="button" id="PopoverLegacy" color="primary"><FontAwesomeIcon icon={faPalette}  size={'lg'}/></Button>
                             </InputGroupAddon>
                             <MaskedInput
                             className="form-control"

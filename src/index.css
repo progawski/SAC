@@ -11,3 +11,6 @@
 .background-blend-mode{
     background-blend-mode: multiply;
 }
+.touch-action {
+    touch-action: none;
+}
